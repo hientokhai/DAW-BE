@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ColorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,12 @@ Route::prefix('users')->group(function () {
     Route::get('/', function (Request $request) {
         return ["message" => "This is API for Users"];
     });
+});
+
+// colors
+Route::prefix('colors')->group(function () {
+    Route::get('/', [ColorController::class, 'index']);
+    Route::post('/', [ColorController::class, 'store']);
+    Route::put('/update/{id}', [ColorController::class, 'update']);
+    Route::delete('/destroy/{id}', [ColorController::class, 'destroy']);
 });
