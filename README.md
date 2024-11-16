@@ -6,4 +6,8 @@ I. Các bước build dự án khi clone về máy
 
 3. Run php artisan key:generate
 
-4. Run php artisan serve
+4. Run php artisan migrate
+
+5. Run php artisan db:seed
+
+6. Run php artisan serve
