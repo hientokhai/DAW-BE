@@ -20,13 +20,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Bảng suppliers
-        DB::table('suppliers')->insert([
-            ['name' => 'Nhà cung cấp 1', 'address' => 'Address 1', 'phone_number' => '123456789', 'email' => 'supplier1@example.com', 'contact_person' => 'John Doe'],
-            ['name' => 'Nhà cung cấp 2', 'address' => 'Address 2', 'phone_number' => '987654321', 'email' => 'supplier2@example.com', 'contact_person' => 'Jane Doe'],
-            ['name' => 'Nhà cung cấp 3', 'address' => 'Address 3', 'phone_number' => '555555555', 'email' => 'supplier3@example.com', 'contact_person' => 'Bob Smith'],
-        ]);
-
         // Bảng colors
         DB::table('colors')->insert([
             ['color_name' => 'Đỏ', 'color_code' => '#FF0000'],
@@ -63,9 +56,9 @@ class DatabaseSeeder extends Seeder
 
         // Bảng products
         DB::table('products')->insert([
-            ['category_id' => 1, 'name' => 'Product 1', 'ori_price' => 100000, 'sel_price' => 200000, 'description' => 'Description 1', 'is_featured' => 1, 'supplier_id' => 1, 'slug' => 'product-1'],
-            ['category_id' => 2, 'name' => 'Product 2', 'ori_price' => 250000, 'sel_price' => 450000, 'description' => 'Description 2', 'is_featured' => 0, 'supplier_id' => 2, 'slug' => 'product-2'],
-            ['category_id' => 3, 'name' => 'Product 3', 'ori_price' => 350000, 'sel_price' => 650000, 'description' => 'Description 3', 'is_featured' => 1, 'supplier_id' => 3, 'slug' => 'product-3'],
+            ['category_id' => 1, 'name' => 'Product 1', 'ori_price' => 100000, 'sel_price' => 200000, 'description' => 'Description 1', 'is_featured' => 1, 'slug' => 'product-1'],
+            ['category_id' => 2, 'name' => 'Product 2', 'ori_price' => 250000, 'sel_price' => 450000, 'description' => 'Description 2', 'is_featured' => 0, 'slug' => 'product-2'],
+            ['category_id' => 3, 'name' => 'Product 3', 'ori_price' => 350000, 'sel_price' => 650000, 'description' => 'Description 3', 'is_featured' => 1, 'slug' => 'product-3'],
         ]);
 
         // Bảng product_variants

@@ -31,7 +31,6 @@ return new class extends Migration {
 
         Schema::table('products', function (Blueprint $table) {
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
         });
 
         Schema::table('categories', function (Blueprint $table) {
@@ -81,7 +80,6 @@ return new class extends Migration {
 
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['category_id']);
-            $table->dropForeign(['supplier_id']);
         });
 
         Schema::table('categories', function (Blueprint $table) {
