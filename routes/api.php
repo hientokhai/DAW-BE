@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +33,9 @@ Route::prefix('colors')->group(function () {
     Route::post('/', [ColorController::class, 'store']);
     Route::put('/update/{id}', [ColorController::class, 'update']);
     Route::delete('/destroy/{id}', [ColorController::class, 'destroy']);
+});
+
+// orders
+Route::prefix('orders')->group(function () {
+    Route::get('/', [OrderController::class, 'index']);
 });
