@@ -23,4 +23,14 @@ class OrderDetail extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+
+    public function productVariant()
+    {
+        return $this->belongsTo(ProductVariant::class, 'product_variant_id', 'id');
+    }
 }

@@ -38,4 +38,5 @@ Route::prefix('colors')->group(function () {
 // orders
 Route::prefix('orders')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
+    Route::get('/{id}', [OrderController::class, 'getOrderById']);
 });

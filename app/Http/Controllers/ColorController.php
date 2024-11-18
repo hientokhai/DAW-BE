@@ -37,9 +37,11 @@ class ColorController extends Controller
             // Validate the request data
             $validatedData = $request->validate([
                 'color_name' => 'required|string|max:255|unique:colors,color_name',
+                'color_code' => 'required|string|max:255',
             ], [
                 'color_name.required' => 'The color name is empty.',
                 'name.unique' => 'Color name already exists. ',
+                'color_code.required' => 'The color code is empty.',
             ]);
 
             $color = Color::create($validatedData);
