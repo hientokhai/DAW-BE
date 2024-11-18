@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +40,13 @@ Route::prefix('colors')->group(function () {
 // orders
 Route::prefix('orders')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
+});
+//categoryD
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'index']);
+    Route::post('/store', [CategoryController::class, 'store']);
+    Route::get('/search', [CategoryController::class, 'search']);
+    Route::get('/show/{id}', [CategoryController::class, 'show']);
+    Route::put('/update/{id}', [CategoryController::class, 'update']);
+    Route::delete('/destroy/{id}', [CategoryController::class, 'destroy']);
 });
