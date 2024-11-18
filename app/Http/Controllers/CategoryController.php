@@ -14,6 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        
         // Lấy tất cả các danh mục từ cơ sở dữ liệu
     $categories = Category::orderByDesc('created_at')->get();
 
