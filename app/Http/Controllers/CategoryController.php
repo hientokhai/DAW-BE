@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // Lấy tất cả các danh mục từ cơ sở dữ liệu Api Danh sach danh muc
+        // Lấy tất cả các danh mục từ cơ sở dữ liệu
     $categories = Category::orderByDesc('created_at')->get();
 
     // Kiểm tra xem có danh mục nào không
@@ -57,7 +57,7 @@ public function store(Request $request)
         'is_visible' => 'boolean',
     ]);
 
-    // Tạo danh mục mới Api them danh muc 
+    // Tạo danh mục mới
     $category = Category::create($request->only('name', 'slug', 'parent_id', 'is_visible'));
 
     return $this->successResponse($category, 'Category created successfully', 201);
