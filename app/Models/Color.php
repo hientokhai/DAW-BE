@@ -22,4 +22,9 @@ class Color extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public function productVariants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
 }

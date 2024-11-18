@@ -27,5 +27,13 @@ class Product extends Model
         'deleted_at',
     ];
 
+    public function productVariants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
 
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }
