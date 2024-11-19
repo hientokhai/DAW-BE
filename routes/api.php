@@ -2,9 +2,7 @@
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\ProductLikeViewController;
-use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -64,19 +62,9 @@ Route::prefix('products')->group(function () {
     Route::post('/', [ProductController::class, 'store']);
 });
 
-// products-image
-Route::prefix('products-images')->group(function () {
-    Route::get('/', [ProductImageController::class, 'index']);
-    Route::post('/', [ProductImageController::class, 'store']);
-});
 
 // products-like-view
 Route::prefix('products-like-view')->group(function () {
     Route::get('/', [ProductLikeViewController::class, 'index']);
 });
 
-// products-variant
-Route::prefix('products-variants')->group(function () {
-    Route::get('/', [ProductVariantController::class, 'index']);
-    Route::post('/', [ProductVariantController::class, 'store']);
-});
