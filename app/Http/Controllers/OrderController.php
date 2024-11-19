@@ -54,10 +54,10 @@ class OrderController extends Controller
             'id' => $order->id,
             'created_at' => $order->created_at ? $order->created_at->format('d/m/Y') : 'N/A',
             'customer' => $order->user->name ?? 'N/A',
-            'phone_number' => $order->user->phone ?? 'N/A',
+            'phone_number' => $order->user->phone_number ?? 'N/A',
             'address' => $order->user->address ?? 'N/A',
             'total_order_price' => $order->total_order_price,
-            'payment_method' => $order->payment_method,
+            'payment_method' => $order->payment_method == 1 ? "COD" : "VNPay",
             'payment_status' => $order->payment_status == true ? 'Đã thanh toán' : 'Chưa thanh toán',
             'order_status' => $order->order_status,
             'products' => []
@@ -127,4 +127,32 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function updateOrderStatus(Request $request, string $orderId)
+    {
+        // Lấy trạng thái mới từ request
+        $status = $request->input('order_status');// 1: Chờ xử lý, 2: Đang vận chuyển, 3:Đã giao, 4: Đã hủy
+
+        try {
+            // Tìm đơn hàng cần cập nhật
+            $order = Order::find($orderId);
+            if (!$order) {
+                return $this->notFoundResponse('Order not found.');
+            }
+
+            if ($status == 3) { // Trạng thái "Đã giao"
+                $order->payment_status = 1; // Cập nhật trạng thái thanh toán thành đã thanh toán
+            }
+
+            // Cập nhật trạng thái đơn hàng
+            $order->order_status = $status;
+            $order->save();
+
+            // Trả về phản hồi thành công
+            return $this->successResponse($order, 'Order status updated successfully.');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
 }
