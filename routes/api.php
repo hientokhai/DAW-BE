@@ -4,6 +4,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SizeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SizeController;
@@ -61,8 +62,6 @@ Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);
     Route::post('/', [ProductController::class, 'store']);
 });
-
-
 // products-like-view
 Route::prefix('products-like-view')->group(function () {
     Route::get('/', [ProductLikeViewController::class, 'index']);

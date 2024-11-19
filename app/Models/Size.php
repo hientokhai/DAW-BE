@@ -22,9 +22,8 @@ class Size extends Model
         'updated_at',
         'deleted_at',
     ];
-     // Define the relationship with ProductVariant
-     public function productVariants()
+    public function productVariant()
     {
-        return $this->hasMany(ProductVariant::class, 'size_id');
+        return $this->hasMany(ProductVariant::class);
     }
 }

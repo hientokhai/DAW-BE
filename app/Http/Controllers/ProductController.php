@@ -12,11 +12,11 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 class ProductController extends Controller
 {
     use JsonResponse;
+
     // Lấy danh sách sản phẩm
     public function index()
     {
         $products = Product::with(['images', 'productVariants'])->get(); // Lấy toàn bộ sản phẩm
-
         return $this->successResponse(data: $products, message:'Product list.');
     }
 
@@ -33,10 +33,10 @@ class ProductController extends Controller
                 'description' => 'nullable|string',
                 'images' => 'nullable|array',
                 'images.*' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation cho file ảnh
-                'variants' => 'nullable|array',
-                'variants.*.quantity' => 'required|integer|min:0',
-                'variants.*.size_id' => 'required|exists:sizes,id',
-                'variants.*.color_id' => 'required|exists:colors,id',
+                'productVariants' => 'nullable|array',
+                'productVariants.*.quantity' => 'required|integer|min:0',
+                'productVariants.*.size_id' => 'required|exists:sizes,id',
+                'productVariants.*.color_id' => 'required|exists:colors,id',
             ]);
             // Tạo slug từ name
             $validatedData['slug'] = Str::slug($request->name, '-');
@@ -58,8 +58,8 @@ class ProductController extends Controller
                 }
             }    
 
-            if ($request->has('variants')) {
-                foreach ($request->variants as $variant) {
+            if ($request->has('productVariants')) {
+                foreach ($request->productVariants as $variant) {
                     ProductVariant::create([
                         'product_id' => $product->id,
                         'quantity'   => $variant['quantity'],
