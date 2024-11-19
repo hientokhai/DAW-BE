@@ -40,4 +40,5 @@ Route::prefix('orders')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
     Route::get('/{id}', [OrderController::class, 'getOrderById']);
     Route::put('/{id}/status', [OrderController::class, 'updateOrderStatus']);
+    Route::delete('/{id}', [OrderController::class, 'destroy']);
 });

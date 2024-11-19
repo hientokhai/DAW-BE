@@ -125,16 +125,26 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = Order::find($id);
+
+        if (!$order) {
+            return $this->notFoundResponse('Order not found.');
+        }
+
+        try {
+            $order->delete();
+
+            return $this->successResponse(null, 'Order deleted successfully.');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
     }
 
     public function updateOrderStatus(Request $request, string $orderId)
     {
-        // Lấy trạng thái mới từ request
         $status = $request->input('order_status');// 1: Chờ xử lý, 2: Đang vận chuyển, 3:Đã giao, 4: Đã hủy
 
         try {
-            // Tìm đơn hàng cần cập nhật
             $order = Order::find($orderId);
             if (!$order) {
                 return $this->notFoundResponse('Order not found.');
@@ -144,11 +154,9 @@ class OrderController extends Controller
                 $order->payment_status = 1; // Cập nhật trạng thái thanh toán thành đã thanh toán
             }
 
-            // Cập nhật trạng thái đơn hàng
             $order->order_status = $status;
             $order->save();
 
-            // Trả về phản hồi thành công
             return $this->successResponse($order, 'Order status updated successfully.');
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage());
