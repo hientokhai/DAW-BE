@@ -57,5 +57,6 @@ Route::prefix('categories')->group(function () {
 //size 
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'index']);
+    Route::post('/', [SizeController::class, 'store']); // Thêm một kích thước mới
 
 });
