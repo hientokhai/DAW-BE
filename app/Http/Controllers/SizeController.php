@@ -50,4 +50,16 @@ class SizeController extends Controller
         $size->update($request->all());
         return response()->json($size, 200);
     }
+    // Phương thức để xóa một kích thước theo ID
+    public function destroy($id)
+    {
+        // Tìm kích thước theo ID
+        $size = Size::findOrFail($id);
+
+        // Xóa kích thước
+        $size->delete();
+
+        // Trả về phản hồi thành công
+        return response()->json(['message' => 'Size deleted successfully.'], 200);
+    }
 }
