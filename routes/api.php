@@ -3,6 +3,8 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLikeViewController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SlideshowController;
@@ -27,9 +29,7 @@ use Illuminate\Support\Facades\Route;
 
 // users
 Route::prefix('users')->group(function () {
-    Route::get('/', function (Request $request) {
-        return ["message" => "This is API for Users"];
-    });
+    Route::get('/', [UserController::class, 'index']);
 });
 
 // colors
@@ -57,6 +57,18 @@ Route::prefix('categories')->group(function () {
     Route::put('/update/{id}', [CategoryController::class, 'update']);
     Route::delete('/destroy/{id}', [CategoryController::class, 'destroy']);
 });
+
+// products
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'store']);
+});
+// products-like-view
+Route::prefix('products-like-view')->group(function () {
+    Route::get('/', [ProductLikeViewController::class, 'index']);
+});
+
+
 
 // products
 Route::prefix('products')->group(function () {
