@@ -5,9 +5,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SizeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +26,7 @@ use App\Http\Controllers\SizeController;
 
 // users
 Route::prefix('users')->group(function () {
-    Route::get('/', function (Request $request) {
-        return ["message" => "This is API for Users"];
-    });
+    Route::get('/', [UserController::class, 'index']);
 });
 
 // colors
