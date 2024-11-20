@@ -5,8 +5,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\SlideshowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,4 +75,8 @@ Route::prefix('sizes')->group(function () {
     Route::post('/store', [SizeController::class, 'store']); // Thêm một kích thước mới
     Route::put('update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('destroy/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
+});
+//Slideshow
+Route::prefix('slideshows')->group(function () {
+    Route::get('/', [SlideshowController::class, 'index']);
 });
