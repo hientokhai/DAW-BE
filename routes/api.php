@@ -59,7 +59,7 @@ Route::prefix('categories')->group(function () {
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'index']);
     Route::post('/store/', [SizeController::class, 'store']); // Thêm một kích thước mới
-    Route::put('/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
+    Route::put('/update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
 });
 Route::prefix('slideshows')->group(function () {
