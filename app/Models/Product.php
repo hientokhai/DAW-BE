@@ -26,14 +26,18 @@ class Product extends Model
         'updated_at',
         'deleted_at',
     ];
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 
     public function productVariants()
     {
         return $this->hasMany(ProductVariant::class);
     }
 
-    public function images()
+    public function category()
     {
-        return $this->hasMany(ProductImage::class);
+        return $this->belongsTo(Category::class, 'category_id','id');
     }
 }
