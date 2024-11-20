@@ -69,4 +69,33 @@ class SlideshowController extends Controller
             'data' => $slide
         ], 201);
     }
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image_url' => 'nullable|url',
+            'link_url' => 'nullable|url',
+        ]);
+
+        // Tìm slide cần cập nhật
+        $slide = Slide::find($id);
+
+        // Kiểm tra xem slide có tồn tại không
+        if (!$slide) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Slide not found',
+            ], 404);
+        }
+
+        // Cập nhật slide
+        $slide->update($request->only('title', 'image_url', 'link_url', 'description'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Slide updated successfully',
+            'data' => $slide
+        ]);
+    }
 }
