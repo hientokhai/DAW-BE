@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\SlideShowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +58,13 @@ Route::prefix('categories')->group(function () {
 //size 
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'index']);
-    Route::post('/', [SizeController::class, 'store']); // Thêm một kích thước mới
+    Route::post('/store/', [SizeController::class, 'store']); // Thêm một kích thước mới
     Route::put('/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
+});
+Route::prefix('slideshows')->group(function () {
+    Route::get('/', [SlideShowController::class, 'index']);
+    Route::post('/store/', [SlideShowController::class, 'store']); // Thêm một kích thước mới
+    Route::put('/update/{id}', [SlideShowController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
+    Route::delete('/destroy/{id}', [SlideShowController::class, 'destroy']); // Xóa một kích thước theo ID
 });
