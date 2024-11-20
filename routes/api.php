@@ -5,9 +5,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SizeController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SizeController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +26,7 @@ use App\Http\Controllers\SizeController;
 
 // users
 Route::prefix('users')->group(function () {
-    Route::get('/', function (Request $request) {
-        return ["message" => "This is API for Users"];
-    });
+    Route::get('/', [UserController::class, 'index']);
 });
 
 // colors
@@ -74,4 +72,9 @@ Route::prefix('sizes')->group(function () {
     Route::post('/', [SizeController::class, 'store']); // Thêm một kích thước mới
     Route::put('/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
+});
+
+// login
+Route::prefix('login')->group(function () {
+    Route::post('/', [LoginController::class, 'login']);
 });
