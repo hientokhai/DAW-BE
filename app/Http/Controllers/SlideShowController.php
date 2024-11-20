@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Slide;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class SlideshowController extends Controller
 {
@@ -12,7 +13,7 @@ class SlideshowController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         // Lấy tất cả các slide từ cơ sở dữ liệu
         $slides = Slide::orderByDesc('created_at')->get();
@@ -34,8 +35,6 @@ class SlideshowController extends Controller
                 "image_url" => $slide->image_url,
                 "link_url" => $slide->link_url,
                 "description" => $slide->description,
-                "created_at" => $slide->created_at,
-                "updated_at" => $slide->updated_at,
             ];
         });
 
@@ -44,5 +43,30 @@ class SlideshowController extends Controller
             'message' => 'List of slides',
             'data' => $data
         ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image_url' => 'nullable|url',
+            'link_url' => 'nullable|url',
+        ]);
+
+        // Tạo slide mới
+        $slide = Slide::create($request->only('title', 'image_url', 'link_url', 'description'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Slide created successfully',
+            'data' => $slide
+        ], 201);
     }
 }

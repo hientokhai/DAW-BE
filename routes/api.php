@@ -79,4 +79,5 @@ Route::prefix('sizes')->group(function () {
 //Slideshow
 Route::prefix('slideshows')->group(function () {
     Route::get('/', [SlideshowController::class, 'index']);
+    Route::post('/store', [SlideshowController::class, 'store']);
 });
