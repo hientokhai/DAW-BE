@@ -18,7 +18,7 @@ class SizeController extends Controller
         $data = $sizes->map(function ($size) {
             return [
                 "id" => $size->id,
-                "size_name" => $size->size_name,
+                "size_name" => $size->size_name, // Tên size
                 "description" => $size->description,
                 "created_at" => $size->created_at ? $size->created_at->format('d/m/Y') : 'N/A',
             ];

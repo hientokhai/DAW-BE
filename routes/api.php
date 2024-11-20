@@ -57,7 +57,7 @@ Route::prefix('categories')->group(function () {
 //size 
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'index']);
-    Route::post('/', [SizeController::class, 'store']); // Thêm một kích thước mới
-    Route::put('/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
-    Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
+    Route::post('/store', [SizeController::class, 'store']); // Thêm một kích thước mới
+    Route::put('update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
+    Route::delete('destroy/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
 });
