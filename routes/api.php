@@ -81,4 +81,5 @@ Route::prefix('slideshows')->group(function () {
     Route::get('/', [SlideshowController::class, 'index']);
     Route::post('/store', [SlideshowController::class, 'store']);
     Route::put('update/{id}', [SlideshowController::class, 'update']); // Sử dụng PUT cho API update
+    Route::delete('destroy/{id}', [SlideshowController::class, 'destroy']);
 });

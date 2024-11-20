@@ -98,4 +98,25 @@ class SlideshowController extends Controller
             'data' => $slide
         ]);
     }
+    public function destroy(int $id): JsonResponse
+    {
+        // Tìm slide cần xóa
+        $slide = Slide::find($id);
+
+        // Kiểm tra xem slide có tồn tại không
+        if (!$slide) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Slide not found',
+            ], 404);
+        }
+
+        // Xóa slide
+        $slide->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Slide deleted successfully',
+        ]);
+    }
 }
