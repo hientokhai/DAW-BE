@@ -183,6 +183,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+        
         /*
          * Package Service Providers...
          */

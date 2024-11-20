@@ -6,8 +6,8 @@ use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,4 +72,9 @@ Route::prefix('sizes')->group(function () {
     Route::post('/', [SizeController::class, 'store']); // Thêm một kích thước mới
     Route::put('/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
+});
+
+// login
+Route::prefix('login')->group(function () {
+    Route::post('/', [LoginController::class, 'login']);
 });
