@@ -5,13 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SizeController;
-<<<<<<< HEAD
 use App\Http\Controllers\SlideShowController;
-=======
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
->>>>>>> 83b6c3c85e49cd14e290fc6ea3fb8cc9820168da
 
 /*
 |--------------------------------------------------------------------------
@@ -79,16 +73,9 @@ Route::prefix('sizes')->group(function () {
     Route::put('/update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
 });
-<<<<<<< HEAD
 Route::prefix('slideshows')->group(function () {
     Route::get('/', [SlideShowController::class, 'index']);
     Route::post('/store/', [SlideShowController::class, 'store']); // Thêm một kích thước mới
     Route::put('/update/{id}', [SlideShowController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/destroy/{id}', [SlideShowController::class, 'destroy']); // Xóa một kích thước theo ID
-=======
-
-// login
-Route::prefix('login')->group(function () {
-    Route::post('/', [LoginController::class, 'login']);
->>>>>>> 83b6c3c85e49cd14e290fc6ea3fb8cc9820168da
 });
