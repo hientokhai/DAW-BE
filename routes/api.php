@@ -62,6 +62,8 @@ Route::prefix('categories')->group(function () {
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);
     Route::post('/', [ProductController::class, 'store']);
+    Route::get('/{id}', [ProductController::class, 'getById']);
+    Route::post('/{id}', [ProductController::class, 'update']);
 });
 // products-like-view
 Route::prefix('products-like-view')->group(function () {
