@@ -1,11 +1,16 @@
 <?php
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SlideShowController;
+use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +71,7 @@ Route::prefix('products-like-view')->group(function () {
 });
 
 
-//size 
+//size
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'index']);
     Route::post('/store/', [SizeController::class, 'store']); // Thêm một kích thước mới
@@ -78,4 +83,15 @@ Route::prefix('slideshows')->group(function () {
     Route::post('/store/', [SlideShowController::class, 'store']); // Thêm một kích thước mới
     Route::put('/update/{id}', [SlideShowController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/destroy/{id}', [SlideShowController::class, 'destroy']); // Xóa một kích thước theo ID
+});
+
+//comments
+Route::prefix('comments')->group(function () {
+    Route::get('/', [CommentController::class, 'index']);
+    Route::post('/{id}', [CommentController::class, 'delete']);
+});
+
+//satistics
+Route::prefix('statitics')->group(function () {
+    Route::get('/', [StatisticController::class, 'index']);
 });
