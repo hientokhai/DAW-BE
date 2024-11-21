@@ -1,12 +1,17 @@
 <?php
-
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SizeController;
+<<<<<<< HEAD
 use App\Http\Controllers\SlideShowController;
+=======
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+>>>>>>> 83b6c3c85e49cd14e290fc6ea3fb8cc9820168da
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +30,7 @@ use App\Http\Controllers\SlideShowController;
 
 // users
 Route::prefix('users')->group(function () {
-    Route::get('/', function (Request $request) {
-        return ["message" => "This is API for Users"];
-    });
+    Route::get('/', [UserController::class, 'index']);
 });
 
 // colors
@@ -55,6 +58,20 @@ Route::prefix('categories')->group(function () {
     Route::put('/update/{id}', [CategoryController::class, 'update']);
     Route::delete('/destroy/{id}', [CategoryController::class, 'destroy']);
 });
+
+// products
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'store']);
+    Route::get('/{id}', [ProductController::class, 'getById']);
+    Route::post('/{id}', [ProductController::class, 'update']);
+});
+// products-like-view
+Route::prefix('products-like-view')->group(function () {
+    Route::get('/', [ProductLikeViewController::class, 'index']);
+});
+
+
 //size 
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'index']);
@@ -62,9 +79,16 @@ Route::prefix('sizes')->group(function () {
     Route::put('/update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
 });
+<<<<<<< HEAD
 Route::prefix('slideshows')->group(function () {
     Route::get('/', [SlideShowController::class, 'index']);
     Route::post('/store/', [SlideShowController::class, 'store']); // Thêm một kích thước mới
     Route::put('/update/{id}', [SlideShowController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/destroy/{id}', [SlideShowController::class, 'destroy']); // Xóa một kích thước theo ID
+=======
+
+// login
+Route::prefix('login')->group(function () {
+    Route::post('/', [LoginController::class, 'login']);
+>>>>>>> 83b6c3c85e49cd14e290fc6ea3fb8cc9820168da
 });
