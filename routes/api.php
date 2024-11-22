@@ -60,10 +60,12 @@ Route::prefix('categories')->group(function () {
 
 // products
 Route::prefix('products')->group(function () {
+    Route::post('/search-product', [ProductController::class, 'searchProduct']);
     Route::get('/', [ProductController::class, 'index']);
     Route::post('/', [ProductController::class, 'store']);
     Route::get('/{id}', [ProductController::class, 'getById']);
     Route::post('/{id}', [ProductController::class, 'update']);
+    Route::delete('/destroy/{id}', [ProductController::class, 'destroy']);
 });
 // products-like-view
 Route::prefix('products-like-view')->group(function () {
