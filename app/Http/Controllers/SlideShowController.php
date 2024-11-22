@@ -26,7 +26,7 @@ class SlideshowController extends Controller
                 "id" => $slide->id,
                 "title" => $slide->title,
                 "image_url" => $slide->image_url,
-                'link_url' => 'nullable|url',
+                'link_url' => $slide->link_url,
                 "description" => $slide->description,
                 "is_active" => $slide->is_active,
             ];
@@ -41,27 +41,39 @@ class SlideshowController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'image_url' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'link_url' => 'nullable|url',
-            'is_active' => 'nullable|boolean'
-        ]);
+            try {
+            // Validate the request data
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'image_url' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Hình ảnh là bắt buộc
+                'link_url' => 'nullable|url', // Đường dẫn hình ảnh là tùy chọn
+                'is_active' => 'nullable|boolean'
+            ]);
 
-        $slideData = $request->only('title', 'description', 'is_active');
 
-        if ($request->hasFile('image_url')) {
-            $slideData['image_url'] = $this->uploadImage($request->file('image_url'));
+            // Upload hình ảnh lên Cloudinary và lấy URL trả về
+            $uploadResult = Cloudinary::upload($request->file('image_url')->getRealPath(), [
+                'folder' => 'slides',
+            ]);
+
+            // Lưu URL hình ảnh vào validatedData
+            $validatedData['image_url'] = $uploadResult->getSecurePath(); // Lấy URL bảo mật từ Cloudinary
+
+            // Tạo mới slide
+            $slide = Slide::create($validatedData);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Slide created successfully',
+                'data' => $slide
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        $slide = Slide::create($slideData);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Slide created successfully',
-            'data' => $slide
-        ], 201);
     }
 
     public function update(Request $request, int $id): JsonResponse
@@ -117,10 +129,4 @@ class SlideshowController extends Controller
         ]);
     }
 
-    private function uploadImage($image)
-    {
-        return Cloudinary::upload($image->getRealPath(), [
-            'folder' => 'slides'
-        ])->getSecurePath();
-    }
 }
