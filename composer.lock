@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1dea27f03e43f4daad6dab3d49f4ba98",
+    "content-hash": "7f4efeb63d95701bf19c6c0a3033fd80",
     "packages": [
         {
             "name": "brick/math",
@@ -134,204 +134,6 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
-        },
-        {
-            "name": "cloudinary-labs/cloudinary-laravel",
-            "version": "2.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cloudinary-community/cloudinary-laravel.git",
-                "reference": "f5c9ca2ecddd5ffa8e04798128b46c065f08ec5e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary-community/cloudinary-laravel/zipball/f5c9ca2ecddd5ffa8e04798128b46c065f08ec5e",
-                "reference": "f5c9ca2ecddd5ffa8e04798128b46c065f08ec5e",
-                "shasum": ""
-            },
-            "require": {
-                "cloudinary/cloudinary_php": "^2.0",
-                "ext-json": "*",
-                "illuminate/support": "^10.0|^11.0",
-                "php": "^8.1"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.1",
-                "orchestra/testbench": "^8.0|^9.0",
-                "pestphp/pest": "^2.35",
-                "sempro/phpunit-pretty-print": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "CloudinaryLabs\\CloudinaryLaravel\\CloudinaryServiceProvider"
-                    ],
-                    "aliases": {
-                        "Cloudinary": "CloudinaryLabs\\CloudinaryLaravel\\Facades\\Cloudinary"
-                    }
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/Support/helpers.php"
-                ],
-                "psr-4": {
-                    "CloudinaryLabs\\CloudinaryLaravel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Prosper Otemuyiwa",
-                    "email": "prosperotemuyiwa@gmail.com",
-                    "homepage": "https://github.com/unicodeveloper"
-                }
-            ],
-            "description": "A Laravel Cloudinary Package",
-            "homepage": "https://github.com/cloudinary-labs/cloudinary-laravel",
-            "keywords": [
-                "File Transformations",
-                "Media management",
-                "cloudinary",
-                "cloudinary-laravel",
-                "file uploads",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/cloudinary-community/cloudinary-laravel/issues",
-                "source": "https://github.com/cloudinary-community/cloudinary-laravel/tree/2.2.2"
-            },
-            "time": "2024-09-25T20:03:40+00:00"
-        },
-        {
-            "name": "cloudinary/cloudinary_php",
-            "version": "2.14.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "5967558bbf5d88e851ebd554559e850ac45b9236"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/5967558bbf5d88e851ebd554559e850ac45b9236",
-                "reference": "5967558bbf5d88e851ebd554559e850ac45b9236",
-                "shasum": ""
-            },
-            "require": {
-                "cloudinary/transformation-builder-sdk": "^1",
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.5.8|^7.4.5",
-                "guzzlehttp/promises": "^1.5.3|^2.0",
-                "guzzlehttp/psr7": "^1.9.1|^2.5",
-                "monolog/monolog": "^1|^2|^3",
-                "php": ">=5.6.0",
-                "psr/log": "^1|^2|^3"
-            },
-            "require-dev": {
-                "consolidation/robo": "~1",
-                "ext-dom": "*",
-                "ext-libxml": "*",
-                "ext-zip": "*",
-                "friendsofphp/php-cs-fixer": "*",
-                "phpmd/phpmd": "*",
-                "squizlabs/php_codesniffer": "3.*",
-                "symfony/phpunit-bridge": "^5.2"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cloudinary",
-                    "homepage": "https://github.com/cloudinary/cloudinary_php/graphs/contributors"
-                }
-            ],
-            "description": "Cloudinary PHP SDK",
-            "homepage": "https://github.com/cloudinary/cloudinary_php",
-            "keywords": [
-                "cdn",
-                "cloud",
-                "cloudinary",
-                "image management",
-                "sdk"
-            ],
-            "support": {
-                "email": "info@cloudinary.com",
-                "issues": "https://github.com/cloudinary/cloudinary_php/issues",
-                "source": "https://github.com/cloudinary/cloudinary_php/tree/2.14.0"
-            },
-            "time": "2024-05-07T15:14:12+00:00"
-        },
-        {
-            "name": "cloudinary/transformation-builder-sdk",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cloudinary/php-transformation-builder-sdk.git",
-                "reference": "8c225472e96291a7af23ddf8947bdf31baac403e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/php-transformation-builder-sdk/zipball/8c225472e96291a7af23ddf8947bdf31baac403e",
-                "reference": "8c225472e96291a7af23ddf8947bdf31baac403e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=5.6.0"
-            },
-            "require-dev": {
-                "consolidation/robo": "~1",
-                "ext-dom": "*",
-                "ext-libxml": "*",
-                "ext-zip": "*",
-                "friendsofphp/php-cs-fixer": "*",
-                "phpmd/phpmd": "*",
-                "squizlabs/php_codesniffer": "3.*",
-                "symfony/phpunit-bridge": "^5.2"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cloudinary",
-                    "homepage": "https://github.com/cloudinary/php-transformation-builder-sdk/graphs/contributors"
-                }
-            ],
-            "description": "Cloudinary PHP Transformation Builder SDK",
-            "homepage": "https://github.com/cloudinary/php-transformation-builder-sdk",
-            "keywords": [
-                "cdn",
-                "cloud",
-                "cloudinary",
-                "image management",
-                "sdk"
-            ],
-            "support": {
-                "email": "info@cloudinary.com",
-                "issues": "https://github.com/cloudinary/php-transformation-builder-sdk/issues",
-                "source": "https://github.com/cloudinary/php-transformation-builder-sdk/tree/1.5.0"
-            },
-            "time": "2024-05-27T12:26:00+00:00"
         },
         {
             "name": "cloudinary-labs/cloudinary-laravel",
@@ -1515,16 +1317,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.48.23",
+            "version": "v10.48.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "625269ca4881d2b50eded2045cb930960a181d98"
+                "reference": "2add73f71b88fc45ee1d4f3421f22366247f6155"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/625269ca4881d2b50eded2045cb930960a181d98",
-                "reference": "625269ca4881d2b50eded2045cb930960a181d98",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/2add73f71b88fc45ee1d4f3421f22366247f6155",
+                "reference": "2add73f71b88fc45ee1d4f3421f22366247f6155",
                 "shasum": ""
             },
             "require": {
@@ -1718,7 +1520,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-11-12T15:39:10+00:00"
+            "time": "2024-11-20T15:57:07+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -2913,32 +2715,32 @@
         },
         {
             "name": "nunomaduro/termwind",
-            "version": "v1.16.0",
+            "version": "v1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/termwind.git",
-                "reference": "dcf1ec3dfa36137b7ce41d43866644a7ab8fc257"
+                "reference": "5369ef84d8142c1d87e4ec278711d4ece3cbf301"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/dcf1ec3dfa36137b7ce41d43866644a7ab8fc257",
-                "reference": "dcf1ec3dfa36137b7ce41d43866644a7ab8fc257",
+                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/5369ef84d8142c1d87e4ec278711d4ece3cbf301",
+                "reference": "5369ef84d8142c1d87e4ec278711d4ece3cbf301",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "php": "^8.1",
-                "symfony/console": "^6.4.12"
+                "symfony/console": "^6.4.15"
             },
             "require-dev": {
-                "illuminate/console": "^10.48.22",
-                "illuminate/support": "^10.48.22",
-                "laravel/pint": "^1.18.1",
-                "pestphp/pest": "^2",
+                "illuminate/console": "^10.48.24",
+                "illuminate/support": "^10.48.24",
+                "laravel/pint": "^1.18.2",
+                "pestphp/pest": "^2.36.0",
                 "pestphp/pest-plugin-mock": "2.0.0",
-                "phpstan/phpstan": "^1.12.6",
+                "phpstan/phpstan": "^1.12.11",
                 "phpstan/phpstan-strict-rules": "^1.6.1",
-                "symfony/var-dumper": "^6.4.11",
+                "symfony/var-dumper": "^6.4.15",
                 "thecodingmachine/phpstan-strict-rules": "^1.0.0"
             },
             "type": "library",
@@ -2978,7 +2780,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/termwind/issues",
-                "source": "https://github.com/nunomaduro/termwind/tree/v1.16.0"
+                "source": "https://github.com/nunomaduro/termwind/tree/v1.17.0"
             },
             "funding": [
                 {
@@ -2994,7 +2796,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-15T15:27:12+00:00"
+            "time": "2024-11-21T10:36:35+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -6312,16 +6114,16 @@
         },
         {
             "name": "voku/portable-ascii",
-            "version": "2.0.1",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/portable-ascii.git",
-                "reference": "b56450eed252f6801410d810c8e1727224ae0743"
+                "reference": "b1d923f88091c6bf09699efcd7c8a1b1bfd7351d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/b56450eed252f6801410d810c8e1727224ae0743",
-                "reference": "b56450eed252f6801410d810c8e1727224ae0743",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/b1d923f88091c6bf09699efcd7c8a1b1bfd7351d",
+                "reference": "b1d923f88091c6bf09699efcd7c8a1b1bfd7351d",
                 "shasum": ""
             },
             "require": {
@@ -6346,7 +6148,7 @@
             "authors": [
                 {
                     "name": "Lars Moelleken",
-                    "homepage": "http://www.moelleken.org/"
+                    "homepage": "https://www.moelleken.org/"
                 }
             ],
             "description": "Portable ASCII library - performance optimized (ascii) string functions for php.",
@@ -6358,7 +6160,7 @@
             ],
             "support": {
                 "issues": "https://github.com/voku/portable-ascii/issues",
-                "source": "https://github.com/voku/portable-ascii/tree/2.0.1"
+                "source": "https://github.com/voku/portable-ascii/tree/2.0.3"
             },
             "funding": [
                 {
@@ -6382,7 +6184,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-08T17:03:00+00:00"
+            "time": "2024-11-21T01:49:47+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -6446,16 +6248,16 @@
     "packages-dev": [
         {
             "name": "fakerphp/faker",
-            "version": "v1.24.0",
+            "version": "v1.24.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "a136842a532bac9ecd8a1c723852b09915d7db50"
+                "reference": "e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/a136842a532bac9ecd8a1c723852b09915d7db50",
-                "reference": "a136842a532bac9ecd8a1c723852b09915d7db50",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5",
+                "reference": "e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5",
                 "shasum": ""
             },
             "require": {
@@ -6503,9 +6305,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.24.0"
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.24.1"
             },
-            "time": "2024-11-07T15:11:20+00:00"
+            "time": "2024-11-21T13:46:39+00:00"
         },
         {
             "name": "filp/whoops",
@@ -6631,16 +6433,16 @@
         },
         {
             "name": "laravel/pint",
-            "version": "v1.18.1",
+            "version": "v1.18.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/pint.git",
-                "reference": "35c00c05ec43e6b46d295efc0f4386ceb30d50d9"
+                "reference": "f55daaf7eb6c2f49ddf6702fb42e3091c64d8a64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/35c00c05ec43e6b46d295efc0f4386ceb30d50d9",
-                "reference": "35c00c05ec43e6b46d295efc0f4386ceb30d50d9",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/f55daaf7eb6c2f49ddf6702fb42e3091c64d8a64",
+                "reference": "f55daaf7eb6c2f49ddf6702fb42e3091c64d8a64",
                 "shasum": ""
             },
             "require": {
@@ -6693,7 +6495,7 @@
                 "issues": "https://github.com/laravel/pint/issues",
                 "source": "https://github.com/laravel/pint"
             },
-            "time": "2024-09-24T17:22:50+00:00"
+            "time": "2024-11-20T09:33:46+00:00"
         },
         {
             "name": "laravel/sail",
@@ -8957,15 +8759,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "8.3"
-    },
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
