@@ -25,59 +25,59 @@ class ProductController extends Controller
     }
 
     // Tạo sản phẩm mới
-    public function store(Request $request)
-    {
-        try {
-            // Validate the request data
-            $validatedData = $request->validate([
-                'category_id' => 'required|integer|exists:categories,id', // Phải tồn tại trong bảng categories
-                'name' => 'required|string|max:255',
-                'ori_price' => 'required|numeric|min:0', // Giá gốc
-                'sel_price' => 'required|numeric|min:0', // Giá bán
-                'description' => 'nullable|string',
-                'images' => 'nullable|array',
-                'images.*' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation cho file ảnh
-                'productVariants' => 'nullable|array',
-                'productVariants.*.quantity' => 'required|integer|min:0',
-                'productVariants.*.size_id' => 'required|exists:sizes,id',
-                'productVariants.*.color_id' => 'required|exists:colors,id',
-            ]);
-            // Tạo slug từ name
-            $validatedData['slug'] = Str::slug($request->name, '-');
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         // Validate the request data
+    //         $validatedData = $request->validate([
+    //             'category_id' => 'required|integer|exists:categories,id', // Phải tồn tại trong bảng categories
+    //             'name' => 'required|string|max:255',
+    //             'ori_price' => 'required|numeric|min:0', // Giá gốc
+    //             'sel_price' => 'required|numeric|min:0', // Giá bán
+    //             'description' => 'nullable|string',
+    //             'images' => 'nullable|array',
+    //             'images.*' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation cho file ảnh
+    //             'productVariants' => 'nullable|array',
+    //             'productVariants.*.quantity' => 'required|integer|min:0',
+    //             'productVariants.*.size_id' => 'required|exists:sizes,id',
+    //             'productVariants.*.color_id' => 'required|exists:colors,id',
+    //         ]);
+    //         // Tạo slug từ name
+    //         $validatedData['slug'] = Str::slug($request->name, '-');
 
-            $product = Product::create($validatedData);
+    //         $product = Product::create($validatedData);
 
-            if ($request->has('images')) {
-                foreach ($request->file('images') as $image) {
-                    // Upload hình ảnh lên Cloudinary và lấy URL trả về
-                    $uploadResult = Cloudinary::upload($image->getRealPath(), [
-                        'folder' => 'products',
-                    ]);
+    //         if ($request->has('images')) {
+    //             foreach ($request->file('images') as $image) {
+    //                 // Upload hình ảnh lên Cloudinary và lấy URL trả về
+    //                 $uploadResult = Cloudinary::upload($image->getRealPath(), [
+    //                     'folder' => 'products',
+    //                 ]);
 
-                    // Lưu vào bảng ProductImage với URL từ Cloudinary
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image_url' => $uploadResult->getSecurePath(), // Lấy URL bảo mật từ Cloudinary
-                    ]);
-                }
-            }
+    //                 // Lưu vào bảng ProductImage với URL từ Cloudinary
+    //                 ProductImage::create([
+    //                     'product_id' => $product->id,
+    //                     'image_url' => $uploadResult->getSecurePath(), // Lấy URL bảo mật từ Cloudinary
+    //                 ]);
+    //             }
+    //         }
 
-            if ($request->has('productVariants')) {
-                foreach ($request->productVariants as $variant) {
-                    ProductVariant::create([
-                        'product_id' => $product->id,
-                        'quantity' => $variant['quantity'],
-                        'size_id' => $variant['size_id'],
-                        'color_id' => $variant['color_id'],
-                    ]);
-                }
-            }
+    //         if ($request->has('productVariants')) {
+    //             foreach ($request->productVariants as $variant) {
+    //                 ProductVariant::create([
+    //                     'product_id' => $product->id,
+    //                     'quantity' => $variant['quantity'],
+    //                     'size_id' => $variant['size_id'],
+    //                     'color_id' => $variant['color_id'],
+    //                 ]);
+    //             }
+    //         }
 
-            return $this->successResponse($product, 'Product created successfully.');
-        } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage());
-        }
-    }
+    //         return $this->successResponse($product, 'Product created successfully.');
+    //     } catch (\Exception $e) {
+    //         return $this->errorResponse($e->getMessage());
+    //     }
+    // }
 
     public function getById($id)
     {
@@ -249,4 +249,81 @@ class ProductController extends Controller
             return $this->errorResponse($e->getMessage());
         }
     }
+
+    public function getCategoriesAndVariants()
+    {
+        try {
+            $categories = Category::all();
+
+            $sizes = Size::all();
+
+            $colors = Color::all();
+
+            return $this->successResponse([
+                'categories' => $categories,
+                'sizes' => $sizes,
+                'colors' => $colors
+            ], 'variant list.');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
+    public function create(Request $request)
+    {
+        try {
+            // Validate dữ liệu
+            $validatedData = $request->validate([
+                'category_id' => 'required|integer|exists:categories,id',
+                'name' => 'required|string|max:255',
+                'ori_price' => 'required|numeric|min:0', // Giá gốc
+                'sel_price' => 'required|numeric|min:0', // Giá bán
+                'description' => 'nullable|string',
+                'images' => 'nullable|array',
+                'images.*' => 'nullable|url',
+                'productVariants' => 'nullable|array',
+                'productVariants.*.quantity' => 'nullable|integer|min:0',
+                'productVariants.*.size_id' => 'nullable|exists:sizes,id',
+                'productVariants.*.color_id' => 'nullable|exists:colors,id',
+            ]);
+
+            // Tạo sản phẩm mới
+            $product = Product::create([
+                'category_id' => $validatedData['category_id'],
+                'name' => $validatedData['name'],
+                'ori_price' => $validatedData['ori_price'],
+                'sel_price' => $validatedData['sel_price'],
+                'description' => $validatedData['description'] ?? null,
+            ]);
+
+            // Xử lý lưu hình ảnh sản phẩm
+            if ($request->has('images')) {
+                foreach ($validatedData['images'] as $imageUrl) {
+                    if ($imageUrl) {
+                        ProductImage::create([
+                            'product_id' => $product->id,
+                            'image_url' => $imageUrl,
+                        ]);
+                    }
+                }
+            }
+
+            // Xử lý lưu biến thể sản phẩm (nếu có)
+            if ($request->has('productVariants')) {
+                foreach ($validatedData['productVariants'] as $variant) {
+                    ProductVariant::create([
+                        'product_id' => $product->id,
+                        'quantity' => $variant['quantity'],
+                        'size_id' => $variant['size_id'],
+                        'color_id' => $variant['color_id'],
+                    ]);
+                }
+            }
+
+            return $this->successResponse($product, 'Product created successfully.');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
 }
