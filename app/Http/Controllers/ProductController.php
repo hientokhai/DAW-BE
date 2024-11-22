@@ -269,13 +269,14 @@ class ProductController extends Controller
         }
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         try {
             // Validate dữ liệu
             $validatedData = $request->validate([
                 'category_id' => 'required|integer|exists:categories,id',
                 'name' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
                 'ori_price' => 'required|numeric|min:0', // Giá gốc
                 'sel_price' => 'required|numeric|min:0', // Giá bán
                 'description' => 'nullable|string',
@@ -291,6 +292,7 @@ class ProductController extends Controller
             $product = Product::create([
                 'category_id' => $validatedData['category_id'],
                 'name' => $validatedData['name'],
+                'slug' => $validatedData['slug'],
                 'ori_price' => $validatedData['ori_price'],
                 'sel_price' => $validatedData['sel_price'],
                 'description' => $validatedData['description'] ?? null,
