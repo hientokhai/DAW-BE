@@ -32,3 +32,4 @@ class SiteInfo extends Model
         'deleted_at',
     ];
 }
+//
