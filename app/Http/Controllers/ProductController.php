@@ -208,4 +208,45 @@ class ProductController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        try {
+            $product = Product::find($id);
+
+            if (!$product) {
+                return $this->notFoundResponse('Product not found.');
+            }
+
+            ProductImage::where('product_id', $product->id)->delete();
+            ProductVariant::where('product_id', $product->id)->delete();
+            $product->delete();
+
+            return $this->successResponse(null, 'Product deleted successfully.');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
+    public function searchProduct(Request $request)
+    {
+        try {
+            $name = $request->input('name');
+
+            $query = Product::query();
+
+            // if ($categoryName) {
+            //     $query->where('category_name', 'LIKE', "%$categoryName%");
+            // }
+
+            if ($name) {
+                $query->where('name', 'LIKE', "%$name%");
+            }
+
+            $products = $query->with(['images', 'productVariants'])->get();
+
+            return $this->successResponse($products, 'Search results.');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
 }
