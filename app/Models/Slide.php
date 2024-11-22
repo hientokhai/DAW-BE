@@ -15,8 +15,9 @@ class Slide extends Model
     protected $fillable = [
         'title',
         'image_url',
-        'link_url',
+        'link_url' ,
         'description',
+        'is_active',
     ];
 
     protected $hidden = [

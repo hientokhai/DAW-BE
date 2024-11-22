@@ -1,14 +1,14 @@
 <?php
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLikeViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SizeController;
-use App\Http\Controllers\SlideshowController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\SlideShowController;
+use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -83,17 +83,28 @@ Route::prefix('products-like-view')->group(function () {
 });
 
 
-//size 
+//size
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'index']);
-    Route::post('/store', [SizeController::class, 'store']); // Thêm một kích thước mới
-    Route::put('update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
-    Route::delete('destroy/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
+    Route::post('/store/', [SizeController::class, 'store']); // Thêm một kích thước mới
+    Route::put('/update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
+    Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
 });
-//Slideshow
+//slide
 Route::prefix('slideshows')->group(function () {
-    Route::get('/', [SlideshowController::class, 'index']);
-    Route::post('/store', [SlideshowController::class, 'store']);
-    Route::put('update/{id}', [SlideshowController::class, 'update']); // Sử dụng PUT cho API update
-    Route::delete('destroy/{id}', [SlideshowController::class, 'destroy']);
+    Route::get('/', [SlideShowController::class, 'index']);
+    Route::post('/store/', [SlideShowController::class, 'store']); // Thêm một kích thước mới
+    Route::put('/update/{id}', [SlideShowController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
+    Route::delete('/destroy/{id}', [SlideShowController::class, 'destroy']); // Xóa một kích thước theo ID
+});
+
+//comments
+Route::prefix('comments')->group(function () {
+    Route::get('/', [CommentController::class, 'index']);
+    Route::post('/{id}', [CommentController::class, 'delete']);
+});
+
+//satistics
+Route::prefix('statitics')->group(function () {
+    Route::get('/', [StatisticController::class, 'index']);
 });
