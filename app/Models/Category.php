@@ -15,7 +15,8 @@ class Category extends Model
     protected $fillable = [
         'name',
         'parent_id',
-        'slug'
+        'slug',
+        'is_visible'
     ];
 
     protected $hidden = [
