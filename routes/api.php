@@ -10,6 +10,9 @@ use App\Http\Controllers\SlideShowController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SiteInfoController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\LoginController;
 
 
 /*
@@ -110,4 +113,21 @@ Route::prefix('comments')->group(function () {
 //satistics
 Route::prefix('statitics')->group(function () {
     Route::get('/', [StatisticController::class, 'index']);
+});
+
+
+
+
+// Siteinfo
+Route::prefix('site-info')->group(function () {
+    Route::get('/', [SiteInfoController::class, 'index']); // Lấy danh sách thông tin site
+    Route::put('/update/{id}', [SiteInfoController::class, 'update']); // Cập nhật thông tin site
+});
+
+//Contact
+Route::prefix('contacts')->group(function () {
+    Route::get('/', [ContactController::class, 'index']); // Lấy tất cả thông tin liên hệ
+    Route::get('/{id}', [ContactController::class, 'show']); // Lấy thông tin liên hệ theo ID
+    Route::put('/{id}', [ContactController::class, 'update']); // Cập nhật thông tin liên hệ theo ID
+    Route::delete('/{id}', [ContactController::class, 'destroy']); // Xóa thông tin liên hệ theo ID
 });
