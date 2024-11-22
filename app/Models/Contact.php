@@ -24,3 +24,4 @@ class Contact extends Model
         'deleted_at',
     ];
 }
+//

@@ -124,7 +124,7 @@ Route::prefix('site-info')->group(function () {
     Route::put('/update/{id}', [SiteInfoController::class, 'update']); // Cập nhật thông tin site
 });
 
-//Contact
+//Contac
 Route::prefix('contacts')->group(function () {
     Route::get('/', [ContactController::class, 'index']); // Lấy tất cả thông tin liên hệ
     Route::get('/{id}', [ContactController::class, 'show']); // Lấy thông tin liên hệ theo ID
