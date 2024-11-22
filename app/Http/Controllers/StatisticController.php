@@ -11,13 +11,21 @@ class StatisticController extends Controller
     {
         $orders = Order::all();
         $total = 0;
+        $buy = 0;
 
         foreach( $orders as $item )
         {
             $total += $item->total_order_price;
+
+            if($item->payment_status)
+            {
+                $buy += 1;
+            }
         }
+
         return response()->json([
             'turnover'=> $total, //doanh thu
+            'buys' => $buy //lượt mua
         ]);
     }
 }
