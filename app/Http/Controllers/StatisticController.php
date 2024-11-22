@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Traits\JsonResponse;
 use Illuminate\Http\Request;
 
 class StatisticController extends Controller
 {
+    use JsonResponse;
     public function index()
     {
         $orders = Order::all();
@@ -23,9 +25,6 @@ class StatisticController extends Controller
             }
         }
 
-        return response()->json([
-            'turnover'=> $total, //doanh thu
-            'buys' => $buy //lượt mua
-        ]);
+        return $this->successResponse([$total, $buy]);
     }
 }

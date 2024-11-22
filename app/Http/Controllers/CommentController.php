@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Traits\JsonResponse;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    use JsonResponse;
     //Api danh sach binh luan
     public function index()
     {
-        $comments = Comment::with(['user', 'productVariant'])->get();
-        return response()->json([
-            'data' => $comments
-        ]);
+        $comments = Comment::with(['user', 'productVariant','productVariant.size','productVariant.color','productVariant.product','productVariant.product.images'])->get();
+        return $this->successResponse($comments, 'CommentList');
     }
     public function delete($id)
     {
@@ -21,9 +21,6 @@ class CommentController extends Controller
         $id = Comment::find($id);
         $id->delete();
 
-        return response()->json([
-            'id'=> $id,
-            'data'=>$comments
-        ]);
+        return $this->successResponse([$id, $comments], 'Success');
     }
 }
