@@ -131,3 +131,7 @@ Route::prefix('contacts')->group(function () {
     Route::put('/{id}', [ContactController::class, 'update']); // Cập nhật thông tin liên hệ theo ID
     Route::delete('/{id}', [ContactController::class, 'destroy']); // Xóa thông tin liên hệ theo ID
 });
+
+Route::prefix('login')->group(function () {
+    Route::post('/', [LoginController::class, 'login']);
+});

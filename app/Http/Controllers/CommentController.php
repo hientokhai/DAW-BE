@@ -12,7 +12,7 @@ class CommentController extends Controller
     //Api danh sach binh luan
     public function index()
     {
-        $comments = Comment::with(['user', 'productVariant','productVariant.size','productVariant.color','productVariant.product','productVariant.product.images'])->get();
+        $comments = Comment::with(['user', 'productVariant', 'productVariant.size', 'productVariant.color', 'productVariant.product', 'productVariant.product.images'])->get();
         return $this->successResponse($comments, 'CommentList');
     }
     public function delete($id)
