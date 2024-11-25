@@ -62,22 +62,10 @@ Route::prefix('categories')->group(function () {
     Route::delete('/destroy/{id}', [CategoryController::class, 'destroy']);
 });
 
-// products
-Route::prefix('products')->group(function () {
-    Route::get('/variant-list', [ProductController::class, 'getCategoriesAndVariants']);
-    Route::post('/search-product', [ProductController::class, 'searchProduct']);
-    Route::get('/', [ProductController::class, 'index']);
-    Route::post('/', [ProductController::class, 'store']);
-    Route::get('/{id}', [ProductController::class, 'getById']);
-    Route::post('/{id}', [ProductController::class, 'update']);
-    Route::delete('/destroy/{id}', [ProductController::class, 'destroy']);
-});
 // products-like-view
 Route::prefix('products-like-view')->group(function () {
     Route::get('/', [ProductLikeViewController::class, 'index']);
 });
-
-
 
 // products
 Route::prefix('products')->group(function () {
@@ -96,11 +84,15 @@ Route::prefix('product-detail')->group(function () {
     Route::get('/{id}', [ProductController::class, 'getByIdClient']);
 });
 
+// products customer
+Route::prefix('customer/products')->group(function () {
+    Route::get('/', [ProductController::class, 'getListClient']);
+});
+
 // products-like-view
 Route::prefix('products-like-view')->group(function () {
     Route::get('/', [ProductLikeViewController::class, 'index']);
 });
-
 
 //size
 Route::prefix('sizes')->group(function () {
@@ -109,6 +101,7 @@ Route::prefix('sizes')->group(function () {
     Route::put('/update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('destroy/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
 });
+
 //slide
 Route::prefix('slideshows')->group(function () {
     Route::get('/', [SlideShowController::class, 'index']);
@@ -127,9 +120,6 @@ Route::prefix('comments')->group(function () {
 Route::prefix('statitics')->group(function () {
     Route::get('/', [StatisticController::class, 'index']);
 });
-
-
-
 
 // Siteinfo
 Route::prefix('site-info')->group(function () {
