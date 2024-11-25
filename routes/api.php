@@ -1,4 +1,6 @@
 <?php
+use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\OrderController;
@@ -144,6 +146,18 @@ Route::prefix('contacts')->group(function () {
     Route::delete('/{id}', [ContactController::class, 'destroy']); // Xóa thông tin liên hệ theo ID
 });
 
+//login
 Route::prefix('login')->group(function () {
     Route::post('/', [LoginController::class, 'login']);
+});
+
+//blogs
+Route::prefix('blogs')->group(function () {
+    Route::get('/', [BlogController::class, 'index']);
+    Route::get('/{id}', [BlogController::class, 'show']);
+});
+
+//blogs_category
+Route::prefix('blogcategory')->group(function () {
+    Route::get('/', [BlogCategoryController::class, 'index']);
 });
