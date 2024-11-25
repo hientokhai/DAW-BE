@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Blog;
 
 class BlogCategory extends Model
 {
@@ -21,4 +22,9 @@ class BlogCategory extends Model
         'updated_at',
         'deleted_at',
     ];
+        // Quan hệ với Blog
+        public function blogs()
+        {
+            return $this->hasMany(Blog::class, 'blog_category_id');
+        }
 }

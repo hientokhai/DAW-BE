@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->string('image_url');
+            $table->string('image_url')->nullable();
             $table->unsignedBigInteger('blog_category_id');
             $table->unsignedBigInteger('product_id')->nullable();
             $table->boolean('is_active')->default(true);
