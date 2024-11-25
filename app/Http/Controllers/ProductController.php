@@ -265,7 +265,7 @@ class ProductController extends Controller
     public function getCategoriesAndVariants()
     {
         try {
-            $categories = Category::all();
+            $categories = Category::whereNotNull('parent_id')->get();
 
             $sizes = Size::all();
 
@@ -412,6 +412,80 @@ class ProductController extends Controller
         }
     }
 
+    public function getListClient(Request $request)
+    {
+        try {
+            // Lấy các tham số lọc từ request
+            $searchQuery = $request->query('searchQuery', '');
+            $selectedCategory = $request->query('category', '');
+            $selectedColor = $request->query('color', '');
+            $selectedSize = $request->query('size', '');
+            $selectedPrice = $request->query('price', '');
+            $sortBy = $request->query('sortBy', 'asc'); // Mặc định sắp xếp tăng dần theo giá
+
+            // Query cơ bản
+            $products = Product::with(['images', 'category', 'productVariants.size', 'productVariants.color'])
+                ->where('name', 'like', '%' . $searchQuery . '%'); // Tìm kiếm theo tên
+
+            // Lọc theo danh mục
+            if ($selectedCategory) {
+                $products->whereHas('category', function ($query) use ($selectedCategory) {
+                    $query->where('name', $selectedCategory);
+                });
+            }
+
+            // Lọc theo màu sắc
+            if ($selectedColor) {
+                $products->whereHas('productVariants.color', function ($query) use ($selectedColor) {
+                    $query->where('color_name', $selectedColor);
+                });
+            }
+
+            // Lọc theo kích thước
+            if ($selectedSize) {
+                $products->whereHas('productVariants.size', function ($query) use ($selectedSize) {
+                    $query->where('size_name', $selectedSize);
+                });
+            }
+
+            // Lọc theo giá
+            if ($selectedPrice === 'below350') {
+                $products->where('sel_price', '<', 350000);
+            } elseif ($selectedPrice === 'between350And750') {
+                $products->whereBetween('sel_price', [350000, 750000]);
+            } elseif ($selectedPrice === 'above750') {
+                $products->where('sel_price', '>', 750000);
+            }
+
+            // Sắp xếp theo giá
+            if ($sortBy === 'asc') {
+                $products->orderBy('sel_price', 'asc');
+            } else {
+                $products->orderBy('sel_price', 'desc');
+            }
+
+            // Lấy dữ liệu
+            $productList = $products->get();
+
+            // Xử lý dữ liệu trả về
+            $productData = $productList->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->sel_price,
+                    'ori_price' => $product->ori_price,
+                    'imgUrl' => $product->images->first()->image_url ?? null, // Lấy ảnh đầu tiên
+                    'category' => $product->category->name ?? null,
+                    'color' => $product->productVariants->pluck('color.color_code')->unique()->values(),
+                    'size' => $product->productVariants->pluck('size.size_name')->unique()->values(),
+                ];
+            });
+
+            return $this->successResponse($productData, 'Product list');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
 
 
 }
