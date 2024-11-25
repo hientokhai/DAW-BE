@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductLikeView;
 use App\Models\ProductVariant;
 use App\Models\Size;
 use App\Traits\JsonResponse;
@@ -218,7 +220,15 @@ class ProductController extends Controller
             }
 
             ProductImage::where('product_id', $product->id)->delete();
+
             ProductVariant::where('product_id', $product->id)->delete();
+
+            ProductLikeView::where('product_id', $product->id)->delete();
+
+            Comment::whereHas('productVariant', function ($query) use ($product) {
+                $query->where('product_id', $product->id);
+            })->delete();
+
             $product->delete();
 
             return $this->successResponse(null, 'Product deleted successfully.');
@@ -226,6 +236,7 @@ class ProductController extends Controller
             return $this->errorResponse($e->getMessage());
         }
     }
+
 
     public function searchProduct(Request $request)
     {
@@ -327,5 +338,79 @@ class ProductController extends Controller
             return $this->errorResponse($e->getMessage(), 500);
         }
     }
+
+    public function getByIdClient($id)
+    {
+        try {
+            $product = Product::with(['images', 'productVariants.size', 'productVariants.color', 'category'])->find($id);
+
+            if (!$product) {
+                return $this->notFoundResponse('Not found.');
+            }
+
+            // Tính số trung bình đánh giá
+            $averageRating = $product->comments->avg('rating') ?? 0;
+            $totalReviews = $product->comments->count();
+            $totalLikes = $product->productLikeViews->sum('like_count');
+
+            // Lấy dữ liệu sizes và colors từ các variants của sản phẩm
+            $uniqueSizes = $product->productVariants
+                ->pluck('size')
+                ->unique('id')
+                ->values()
+                ->map(function ($size) {
+                    return [
+                        'id' => $size->id,
+                        'size_name' => $size->size_name,
+                        'description' => $size->description,
+                    ];
+                });
+
+            $uniqueColors = $product->productVariants
+                ->pluck('color')
+                ->unique('id')
+                ->values()
+                ->map(function ($color) {
+                    return [
+                        'id' => $color->id,
+                        'color_name' => $color->color_name,
+                        'color_code' => $color->color_code,
+                    ];
+                });
+
+            // Chuẩn bị dữ liệu trả về
+            $productData = [
+                'name' => $product->name,
+                'category_id' => $product->category->id ?? null,
+                'productVariants' => $product->productVariants->map(function ($variant) {
+                    return [
+                        'size_id' => $variant->size_id,
+                        'color_id' => $variant->color_id,
+                        'quantity' => $variant->quantity,
+                        'size_name' => $variant->size->size_name,
+                        'color_name' => $variant->color->color_name,
+                        'color_code' => $variant->color->color_code,
+                    ];
+                }),
+                'ori_price' => strval($product->ori_price),
+                'sel_price' => strval($product->sel_price),
+                'description' => $product->description,
+                'images' => $product->images->pluck('image_url')->toArray(),
+                'average_rating' => $averageRating,  // Trả về số trung bình đánh giá
+                'total_reviews' => $totalReviews,    // Trả về tổng số đánh giá
+                'total_likes' => $totalLikes        // Trả về tổng số lượt thích
+            ];
+
+            return $this->successResponse([
+                'product' => $productData,
+                'sizes' => $uniqueSizes,
+                'colors' => $uniqueColors,
+            ], 'Chi tiết sản phẩm.');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
+
 
 }
