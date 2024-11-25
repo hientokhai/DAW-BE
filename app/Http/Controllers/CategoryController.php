@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\ProductVariant;
+use App\Models\Product;
 use App\Models\Category;
 use App\Traits\JsonResponse;
 use Illuminate\Http\Request;
@@ -97,13 +98,24 @@ public function update(Request $request, string $id)
 
 public function destroy(string $id)
 {
-    // Tìm danh mục theo ID
-    $category = Category::findOrFail($id);
+    try {
+        // Tìm danh mục theo ID
+        $category = Category::findOrFail($id);
 
-    // Xóa danh mục
-    $category->delete();
+        // Kiểm tra xem có sản phẩm nào đang sử dụng danh mục này không
+        $productsUsingCategory = Product::where('category_id', $id)->exists();
 
-    return $this->successResponse(null, 'Category deleted successfully');
+        if ($productsUsingCategory) {
+            return $this->errorResponse('Cannot delete category because it is used by one or more products.');
+        }
+
+        // Xóa danh mục
+        $category->delete();
+
+        return $this->successResponse(null, 'Category deleted successfully');
+    } catch (\Exception $e) {
+        return $this->errorResponse($e->getMessage());
+    }
 }
 
 public function search(Request $request)

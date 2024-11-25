@@ -38,7 +38,7 @@ Route::prefix('users')->group(function () {
 // colors
 Route::prefix('colors')->group(function () {
     Route::get('/', [ColorController::class, 'index']);
-    Route::post('/', [ColorController::class, 'store']);
+    Route::post('/store', [ColorController::class, 'store']);
     Route::put('/update/{id}', [ColorController::class, 'update']);
     Route::delete('/destroy/{id}', [ColorController::class, 'destroy']);
 });
@@ -92,14 +92,14 @@ Route::prefix('products-like-view')->group(function () {
 //size
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'index']);
-    Route::post('/store/', [SizeController::class, 'store']); // Thêm một kích thước mới
+    Route::post('/store', [SizeController::class, 'store']); // Thêm một kích thước mới
     Route::put('/update/{id}', [SizeController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
-    Route::delete('/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
+    Route::delete('destroy/{id}', [SizeController::class, 'destroy']); // Xóa một kích thước theo ID
 });
 //slide
 Route::prefix('slideshows')->group(function () {
     Route::get('/', [SlideShowController::class, 'index']);
-    Route::post('/store/', [SlideShowController::class, 'store']); // Thêm một kích thước mới
+    Route::post('/store', [SlideShowController::class, 'store']); // Thêm một kích thước mới
     Route::put('/update/{id}', [SlideShowController::class, 'update']); // Cập nhật thông tin một kích thước theo ID
     Route::delete('/destroy/{id}', [SlideShowController::class, 'destroy']); // Xóa một kích thước theo ID
 });
