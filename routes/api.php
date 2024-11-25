@@ -9,6 +9,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SlideShowController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VnPayController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteInfoController;
 use App\Http\Controllers\ContactController;
@@ -135,3 +136,7 @@ Route::prefix('contacts')->group(function () {
 Route::prefix('login')->group(function () {
     Route::post('/', [LoginController::class, 'login']);
 });
+
+//thanh toan
+
+Route::post('/purchase', [VnPayController::class, 'purchase']);
