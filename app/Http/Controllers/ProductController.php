@@ -23,7 +23,7 @@ class ProductController extends Controller
     // Lấy danh sách sản phẩm
     public function index()
     {
-        $products = Product::with(['images', 'productVariants', 'category'])->get(); // Lấy toàn bộ sản phẩm
+        $products = Product::with(['images', 'productVariants','category', 'category'])->get(); // Lấy toàn bộ sản phẩm
         return $this->successResponse(data: $products, message: 'Product list.');
     }
 
