@@ -80,9 +80,21 @@ Route::prefix('products-like-view')->group(function () {
 
 // products
 Route::prefix('products')->group(function () {
+    Route::get('/cus/{id}', [ProductController::class, 'getByIdClient']);
+    Route::get('/variant-list', [ProductController::class, 'getCategoriesAndVariants']);
+    Route::post('/search-product', [ProductController::class, 'searchProduct']);
     Route::get('/', [ProductController::class, 'index']);
     Route::post('/', [ProductController::class, 'store']);
+    Route::get('/{id}', [ProductController::class, 'getById']);
+    Route::post('/{id}', [ProductController::class, 'update']);
+    Route::delete('/destroy/{id}', [ProductController::class, 'destroy']);
 });
+
+// product detail
+Route::prefix('product-detail')->group(function () {
+    Route::get('/{id}', [ProductController::class, 'getByIdClient']);
+});
+
 // products-like-view
 Route::prefix('products-like-view')->group(function () {
     Route::get('/', [ProductLikeViewController::class, 'index']);

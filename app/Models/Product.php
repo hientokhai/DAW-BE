@@ -38,6 +38,17 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id','id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function comments()
+    {
+        // Lấy tất cả các đánh giá của các sản phẩm từ các ProductVariant
+        return $this->hasManyThrough(Comment::class, ProductVariant::class);
+    }
+
+    public function productLikeViews()
+    {
+        return $this->hasMany(ProductLikeView::class);
     }
 }
