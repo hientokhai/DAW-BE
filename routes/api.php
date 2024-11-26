@@ -126,7 +126,9 @@ Route::prefix('statitics')->group(function () {
 // Siteinfo
 Route::prefix('site-info')->group(function () {
     Route::get('/', [SiteInfoController::class, 'index']); // Lấy danh sách thông tin site
+    Route::post('/store/', [SiteInfoController::class, 'store']); // Thêm thông tin site
     Route::put('/update/{id}', [SiteInfoController::class, 'update']); // Cập nhật thông tin site
+    Route::delete('/destroy/{id}', [SiteInfoController::class, 'destroy']); // Xóa thông tin site
 });
 
 //Contac
