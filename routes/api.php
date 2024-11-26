@@ -15,6 +15,7 @@ use App\Http\Controllers\VnPayController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteInfoController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Auth\LoginController;
 
 
@@ -138,6 +139,13 @@ Route::prefix('contacts')->group(function () {
     Route::put('/{id}', [ContactController::class, 'update']); // Cập nhật thông tin liên hệ theo ID
     Route::delete('/{id}', [ContactController::class, 'destroy']); // Xóa thông tin liên hệ theo ID
 });
+
+
+Route::prefix('services')->group(function () {
+    Route::get('/', [ServiceController::class, 'index']); // Lấy tất cả dịch vụ
+    Route::put('/{id}', [ServiceController::class, 'update']); // Cập nhật thông tin dịch vụ theo ID
+});
+
 
 //login
 Route::prefix('login')->group(function () {
