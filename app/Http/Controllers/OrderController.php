@@ -154,6 +154,21 @@ class OrderController extends Controller
                 $order->payment_status = 1; // Cập nhật trạng thái thanh toán thành đã thanh toán
             }
 
+            // Nếu trạng thái là "Hủy hàng"
+            if ($status == 4) {
+                // Lấy danh sách các sản phẩm trong đơn hàng
+                $orderDetails = $order->orderDetails;
+
+                foreach ($orderDetails as $detail) {
+                    $variant = $detail->productVariant;
+                    if ($variant) {
+                        // Cộng lại số lượng tồn kho
+                        $variant->quantity += $detail->quantity;
+                        $variant->save();
+                    }
+                }
+            }
+
             $order->order_status = $status;
             $order->save();
 
