@@ -17,6 +17,9 @@ return new class extends Migration {
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->string('description')->nullable();
+            $table->string('website')->nullable(); // Thêm cột website
+            $table->string('business_area')->nullable(); // Thêm cột business_area
+            $table->string('policies')->nullable(); // Thêm cột policies
             $table->string('logo_header_url')->nullable();
             $table->string('logo_footer_url')->nullable();
             $table->string('social_facebook')->nullable();
