@@ -16,11 +16,11 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with([
-            'user'
+            'user',
+            'orderDetails.productVariant.product.productImages', // Eager load images for each product
         ])
-            // ->orderByDesc('created_at')
-            ->get();
-
+        ->get();
+    
         $data = $orders->map(function ($order) {
             return [
                 "id" => $order->id,
@@ -30,12 +30,24 @@ class OrderController extends Controller
                 "payment_method" => (int) $order->payment_method,
                 "payment_status" => $order->payment_status,
                 "created_at" => $order->created_at ? $order->created_at->format('d/m/Y') : 'N/A',
+                "order_details" => $order->orderDetails->map(function ($orderDetail) {
+                    // Lấy thông tin sản phẩm và hình ảnh
+                    $product = $orderDetail->productVariant->product;
+                    $images = $product->productImages->map(function ($productImage) {
+                        return $productImage->image_url; // Lấy URL hình ảnh
+                    });
+                    return [
+                        "product_name" => $product->name,
+                        "quantity" => $orderDetail->quantity,
+                        "price" => (double) $orderDetail->productVariant->product->price,
+                        "images" => $images, // Thêm danh sách hình ảnh
+                    ];
+                })
             ];
         });
-
+    
         return $this->successResponse($data, 'List order');
     }
-
     public function getOrderById(string $id)
     {
         // Lấy thông tin chi tiết đơn hàng cùng thông tin sản phẩm liên quan
