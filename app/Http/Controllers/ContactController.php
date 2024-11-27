@@ -35,12 +35,12 @@ class ContactController extends Controller
                 'user_id' => 'nullable|integer', // ID người dùng (có thể null nếu không đăng nhập)
                 'title' => 'nullable|string|max:255', // Tiêu đề liên hệ
                 'message' => 'required|string', // Nội dung liên hệ (bắt buộc)
-                'status' => 'nullable|in:pending,replied', // Trạng thái (mặc định là "pending")
+                'status' => 'nullable|integer|in:0,1', // Trạng thái (mặc định là "pending")
             ]);
 
             // Gán giá trị mặc định nếu không có
             if (!isset($validatedData['status'])) {
-                $validatedData['status'] = 'pending';
+                $validatedData['status'] = 0;
             }
 
             // Tạo mới thông tin liên hệ
