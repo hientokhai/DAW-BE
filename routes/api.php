@@ -15,6 +15,7 @@ use App\Http\Controllers\VnPayController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteInfoController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Auth\LoginController;
 
 
@@ -36,6 +37,7 @@ use App\Http\Controllers\Auth\LoginController;
 // users
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index']);
+    Route::post('/', [UserController::class, 'store']); // Thêm người dùng mới
 });
 
 // colors
@@ -131,13 +133,20 @@ Route::prefix('site-info')->group(function () {
     Route::delete('/destroy/{id}', [SiteInfoController::class, 'destroy']); // Xóa thông tin site
 });
 
-//Contac
+// Contac
 Route::prefix('contacts')->group(function () {
     Route::get('/', [ContactController::class, 'index']); // Lấy tất cả thông tin liên hệ
     Route::get('/{id}', [ContactController::class, 'show']); // Lấy thông tin liên hệ theo ID
+    Route::post('/', [ContactController::class, 'store']); // Thêm mới thông tin liên hệ
     Route::put('/{id}', [ContactController::class, 'update']); // Cập nhật thông tin liên hệ theo ID
-    Route::delete('/{id}', [ContactController::class, 'destroy']); // Xóa thông tin liên hệ theo ID
 });
+
+
+Route::prefix('services')->group(function () {
+    Route::get('/', [ServiceController::class, 'index']); // Lấy tất cả dịch vụ
+    Route::put('/{id}', [ServiceController::class, 'update']); // Cập nhật thông tin dịch vụ theo ID
+});
+
 
 //login
 Route::prefix('login')->group(function () {

@@ -16,4 +16,22 @@ class UserController extends Controller
 
         return $this->successResponse(data: $users, message:'Users list.');
     }
+    public function store(Request $request)
+    {
+        // Xác thực dữ liệu đầu vào
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        // Tạo người dùng mới
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']), // Mã hóa mật khẩu
+        ]);
+
+        return $this->successResponse(data: $user, message: 'User created successfully.');
+    }
 }
