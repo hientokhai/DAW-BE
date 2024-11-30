@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Comment;
@@ -486,6 +487,4 @@ class ProductController extends Controller
             return $this->errorResponse($e->getMessage());
         }
     }
-
-
 }

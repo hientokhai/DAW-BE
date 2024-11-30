@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ColorController;
@@ -50,6 +51,7 @@ Route::prefix('colors')->group(function () {
 
 // orders
 Route::prefix('orders')->group(function () {
+    Route::post('/orders/', [OrderController::class, 'store']);
     Route::get('/', [OrderController::class, 'index']);
     Route::get('/{id}', [OrderController::class, 'getOrderById']);
     Route::put('/{id}/status', [OrderController::class, 'updateOrderStatus']);
