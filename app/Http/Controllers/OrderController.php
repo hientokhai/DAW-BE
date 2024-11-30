@@ -19,13 +19,13 @@ class OrderController extends Controller
             'user',
             'orderDetails.productVariant.product.productImages', // Eager load images for each product
         ])
-        ->get();
-    
+            ->get();
+
         $data = $orders->map(function ($order) {
             return [
                 "id" => $order->id,
                 "customer_name" => $order->user->name,
-                "total_order_price" => (double) $order->total_order_price,
+                "total_order_price" => (float) $order->total_order_price,
                 "order_status" => (int) $order->order_status,
                 "payment_method" => (int) $order->payment_method,
                 "payment_status" => $order->payment_status,
@@ -39,13 +39,13 @@ class OrderController extends Controller
                     return [
                         "product_name" => $product->name,
                         "quantity" => $orderDetail->quantity,
-                        "price" => (double) $orderDetail->productVariant->product->price,
+                        "price" => (float) $orderDetail->productVariant->product->price,
                         "images" => $images, // Thêm danh sách hình ảnh
                     ];
                 })
             ];
         });
-    
+
         return $this->successResponse($data, 'List order');
     }
     public function getOrderById(string $id)
@@ -105,8 +105,62 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate dữ liệu đầu vào
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'total_order_price' => 'required|numeric',
+            'order_status' => 'required|integer',
+            'payment_method' => 'required|integer',
+            'payment_status' => 'required|boolean',
+            'order_details' => 'required|array',
+            'order_details.*.product_variant_id' => 'required|exists:product_variants,id',
+            'order_details.*.quantity' => 'required|integer|min:1',
+        ]);
+
+        try {
+            // Tạo đơn hàng
+            $order = Order::create([
+                'user_id' => $validatedData['user_id'],
+                'total_order_price' => $validatedData['total_order_price'],
+                'order_status' => $validatedData['order_status'],
+                'payment_method' => $validatedData['payment_method'],
+                'payment_status' => $validatedData['payment_status'],
+            ]);
+
+            // Thêm chi tiết đơn hàng và cập nhật tồn kho
+            foreach ($validatedData['order_details'] as $detail) {
+                $productVariant = \App\Models\ProductVariant::find($detail['product_variant_id']);
+
+                if ($productVariant->quantity < $detail['quantity']) {
+                    // Trả về lỗi nếu số lượng không đủ
+                    return response()->json([
+                        'message' => "Sản phẩm '{$productVariant->product->name}' không đủ số lượng."
+                    ], 400);
+                }
+
+                // Trừ số lượng trong kho
+                $productVariant->quantity -= $detail['quantity'];
+                $productVariant->save();
+
+                // Tạo chi tiết đơn hàng
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'product_variant_id' => $detail['product_variant_id'],
+                    'quantity' => $detail['quantity'],
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'Order created successfully.',
+                'order' => $order
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error occurred: ' . $e->getMessage()
+            ], 500);
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -154,7 +208,7 @@ class OrderController extends Controller
 
     public function updateOrderStatus(Request $request, string $orderId)
     {
-        $status = $request->input('order_status');// 1: Chờ xử lý, 2: Đang vận chuyển, 3:Đã giao, 4: Đã hủy
+        $status = $request->input('order_status'); // 1: Chờ xử lý, 2: Đang vận chuyển, 3:Đã giao, 4: Đã hủy
 
         try {
             $order = Order::find($orderId);
@@ -189,5 +243,4 @@ class OrderController extends Controller
             return $this->errorResponse($e->getMessage());
         }
     }
-
 }
