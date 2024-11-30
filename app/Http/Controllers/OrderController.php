@@ -42,6 +42,7 @@ class OrderController extends Controller
                         "product_name" => $product->name,
                         "quantity" => $orderDetail->quantity,
                         "price" => (float) $orderDetail->productVariant->product->price,
+                        "ori_price" => (double) $product->ori_price,
                         "images" => $images, // Thêm danh sách hình ảnh
                     ];
                 })
