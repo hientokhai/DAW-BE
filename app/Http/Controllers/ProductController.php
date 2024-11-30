@@ -386,6 +386,7 @@ class ProductController extends Controller
                 'category_id' => $product->category->id ?? null,
                 'productVariants' => $product->productVariants->map(function ($variant) {
                     return [
+                        'id' => $variant->id,
                         'size_id' => $variant->size_id,
                         'color_id' => $variant->color_id,
                         'quantity' => $variant->quantity,

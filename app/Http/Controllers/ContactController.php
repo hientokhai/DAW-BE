@@ -19,7 +19,7 @@ class ContactController extends Controller
     {
         // Lấy danh sách liên hệ kèm thông tin người dùng
         $contacts = Contact::with('user')->orderBy('created_at', 'desc')->get();
-    
+
         return $this->successResponse($contacts, 'Danh sách liên hệ.');
     }
 
@@ -74,7 +74,7 @@ class ContactController extends Controller
             // Cập nhật thông tin liên hệ
             $contact->update([
                 'response' => $validatedData['response'],
-                'status' => $validatedData['status'] ?? 'replied', // Mặc định là "replied" nếu không gửi
+                'status' => 1, // Mặc định là "replied" nếu không gửi
             ]);
 
             return $this->successResponse($contact, 'Cập nhật phản hồi thành công.');
@@ -82,7 +82,23 @@ class ContactController extends Controller
             return $this->errorResponse($e->getMessage());
         }
     }
+    public function destroy(string $id)
+    {
+        try {
+            // Tìm thông tin liên hệ theo ID
+            $contact = Contact::find($id);
+            if (!$contact) {
+                return $this->errorResponse('Không tìm thấy thông tin liên hệ.');
+            }
 
+            // Xóa liên hệ
+            $contact->delete();
+
+            return $this->successResponse(null, 'Xóa liên hệ thành công.');
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
     /**
      * Remove method removed.
      * Không cho phép xóa thông tin liên hệ.

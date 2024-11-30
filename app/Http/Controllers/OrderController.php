@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\ProductVariant;
 use App\Traits\JsonResponse;
 use Illuminate\Http\Request;
+use Log;
 
 class OrderController extends Controller
 {
@@ -105,6 +107,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info($request);
         // Validate dữ liệu đầu vào
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -122,14 +125,14 @@ class OrderController extends Controller
             $order = Order::create([
                 'user_id' => $validatedData['user_id'],
                 'total_order_price' => $validatedData['total_order_price'],
-                'order_status' => $validatedData['order_status'],
-                'payment_method' => $validatedData['payment_method'],
-                'payment_status' => $validatedData['payment_status'],
+                'order_status' => 1,
+                'payment_method' => 1,
+                'payment_status' => 0,
             ]);
 
             // Thêm chi tiết đơn hàng và cập nhật tồn kho
             foreach ($validatedData['order_details'] as $detail) {
-                $productVariant = \App\Models\ProductVariant::find($detail['product_variant_id']);
+                $productVariant = ProductVariant::find($detail['product_variant_id']);
 
                 if ($productVariant->quantity < $detail['quantity']) {
                     // Trả về lỗi nếu số lượng không đủ

@@ -27,9 +27,8 @@ class StatisticController extends Controller
         $buy = 0;
 
         foreach ($orders as $item) {
-            $total += $item->total_order_price;
-
-            if ($item->payment_status) {
+            if ($item->order_status == 3) {
+                $total += $item->total_order_price;
                 $buy += 1;
             }
         }

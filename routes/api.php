@@ -140,6 +140,7 @@ Route::prefix('contacts')->group(function () {
     Route::get('/', [ContactController::class, 'index']); // Lấy tất cả thông tin liên hệ
     Route::get('/{id}', [ContactController::class, 'show']); // Lấy thông tin liên hệ theo ID
     Route::post('/', [ContactController::class, 'store']); // Thêm mới thông tin liên hệ
+    Route::delete('/{id}', [ContactController::class, 'destroy']);
     Route::put('/{id}', [ContactController::class, 'update']); // Cập nhật thông tin liên hệ theo ID
 });
 
