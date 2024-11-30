@@ -17,11 +17,11 @@ class Order extends Model
         'total_order_price',
         'order_status',
         'payment_method',
-        'payment_status'
+        'payment_status',
+        'created_at',
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
         'deleted_at',
     ];
